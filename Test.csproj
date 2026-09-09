@@ -2,8 +2,39 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
+    <Authors>7Bpencil</Authors>
+    <Copyright>Copyright (c) 7Bpencil 2026</Copyright>
+    <AssemblyName>7Bpencil.Test</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Deterministic>true</Deterministic>
+    <SPTPath>..\Escape from Tarkov</SPTPath>
+    <OutPath>$(SPTPath)\BepInEx\plugins\7Bpencil.Test</OutPath>
+    <StagePath>$(ProjectDir)..\..\Stage\BepInEx\plugins\7Bpencil.Test</StagePath>
+    <AssemblySearchPaths>
+      $(AssemblySearchPaths);
+      $(SPTPath)\BepInEx\core;
+      $(SPTPath)\BepInEx\interop;
+      $(SPTPath)\BepInEx\unity-libs;
+    </AssemblySearchPaths>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony" />
+    <Reference Include="Assembly-CSharp" />
+    <Reference Include="BepInEx.Core" />
+    <Reference Include="BepInEx.Unity.IL2CPP" />
+    <Reference Include="UnityEngine" />
+  </ItemGroup>
+
+  <Target Name="CopyToSPT" AfterTargets="AfterBuild">
+    <Exec Command="mkdir &quot;$(OutPath)&quot;" ContinueOnError="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(OutPath)" />
+  </Target>
+
+  <Target Name="CopyToStage" AfterTargets="AfterBuild" Condition="'$(Configuration)'=='Release'">
+    <Exec Command="mkdir &quot;$(StagePath)&quot;" ContinueOnError="true" />
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(StagePath)" />
+  </Target>
 
 </Project>
