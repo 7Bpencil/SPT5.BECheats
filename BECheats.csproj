@@ -5,12 +5,15 @@
     <Nullable>disable</Nullable>
     <Authors>7Bpencil</Authors>
     <Copyright>Copyright (c) 7Bpencil 2026</Copyright>
-    <AssemblyName>7Bpencil.Test</AssemblyName>
+    <AssemblyName>7Bpencil.BECheats</AssemblyName>
+    <AssemblyVersion>0.0.1</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <Version>$(AssemblyVersion)</Version>
     <LangVersion>latest</LangVersion>
     <Deterministic>true</Deterministic>
-    <SPTPath>..\Escape from Tarkov</SPTPath>
-    <OutPath>$(SPTPath)\BepInEx\plugins\7Bpencil.Test</OutPath>
-    <StagePath>$(ProjectDir)..\..\Stage\BepInEx\plugins\7Bpencil.Test</StagePath>
+    <SPTPath>..\..\Escape from Tarkov</SPTPath>
+    <OutPath>$(SPTPath)\BepInEx\plugins\7Bpencil.BECheats</OutPath>
+    <StagePath>.\Stage\BepInEx\plugins\7Bpencil.BECheats</StagePath>
     <AssemblySearchPaths>
       $(AssemblySearchPaths);
       $(SPTPath)\BepInEx\core;

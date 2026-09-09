@@ -3,14 +3,13 @@ using BepInEx.Unity.IL2CPP;
 using Comfort.Common;
 using EFT;
 using EFT.HealthSystem;
-using EFT.InventoryLogic;
 using HarmonyLib;
 using SPTushonka.Reflection.Patching;
 using System.Reflection;
 
-namespace SevenBoldPencil.Test;
+namespace SevenBoldPencil.BECheats;
 
-[BepInPlugin("7Bpencil.Test", "7Bpencil.Test", "0.0.1")]
+[BepInPlugin("7Bpencil.BECheats", "7Bpencil.BECheats", "0.0.1")]
 public class Plugin : BasePlugin
 {
 	public override void Load()
