@@ -16,6 +16,7 @@
       $(SPTPath)\BepInEx\core;
       $(SPTPath)\BepInEx\interop;
       $(SPTPath)\BepInEx\unity-libs;
+      $(SPTPath)\BepInEx\plugins\sptushonka;
     </AssemblySearchPaths>
   </PropertyGroup>
 
@@ -24,7 +25,12 @@
     <Reference Include="Assembly-CSharp" />
     <Reference Include="BepInEx.Core" />
     <Reference Include="BepInEx.Unity.IL2CPP" />
+    <Reference Include="Comfort" />
+    <Reference Include="Il2Cppmscorlib" />
+    <Reference Include="Il2CppInterop.Runtime" />
+    <Reference Include="SPTushonka.Reflection" />
     <Reference Include="UnityEngine" />
+    <Reference Include="UnityEngine.CoreModule" />
   </ItemGroup>
 
   <Target Name="CopyToSPT" AfterTargets="AfterBuild">
