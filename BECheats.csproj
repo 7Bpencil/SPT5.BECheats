@@ -18,8 +18,8 @@
       $(AssemblySearchPaths);
       $(SPTPath)\BepInEx\core;
       $(SPTPath)\BepInEx\interop;
-      $(SPTPath)\BepInEx\unity-libs;
       $(SPTPath)\BepInEx\plugins\sptushonka;
+      $(SPTPath)\BepInEx\unity-libs;
     </AssemblySearchPaths>
   </PropertyGroup>
 
