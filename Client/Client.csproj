@@ -11,9 +11,9 @@
     <Version>$(AssemblyVersion)</Version>
     <LangVersion>latest</LangVersion>
     <Deterministic>true</Deterministic>
-    <SPTPath>..\..\Escape from Tarkov</SPTPath>
+    <SPTPath>..\..\..\Escape from Tarkov</SPTPath>
     <OutPath>$(SPTPath)\BepInEx\plugins\7Bpencil.BECheats</OutPath>
-    <StagePath>.\Stage\BepInEx\plugins\7Bpencil.BECheats</StagePath>
+    <StagePath>..\Stage\BepInEx\plugins\7Bpencil.BECheats</StagePath>
     <AssemblySearchPaths>
       $(AssemblySearchPaths);
       $(SPTPath)\BepInEx\core;
