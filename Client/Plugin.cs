@@ -7,9 +7,9 @@ using HarmonyLib;
 using SPTushonka.Reflection.Patching;
 using System.Reflection;
 
-namespace SevenBoldPencil.BECheats;
+namespace SevenBoldPencil.BECheats.Client;
 
-[BepInPlugin("7Bpencil.BECheats", "7Bpencil.BECheats", "0.0.1")]
+[BepInPlugin("7Bpencil.BECheats.Client", "7Bpencil.BECheats.Client", "0.0.1")]
 public class Plugin : BasePlugin
 {
 	public override void Load()
