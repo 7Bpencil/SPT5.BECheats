@@ -1,18 +1,40 @@
 # Notes on client modding obstacles and solutions
 
-## Types do not implement interfaces anymore
+## Target framework changed
 
-Interfaces are stripped from types, but `Il2CppInterop` has mapping of which types implement which interfaces. We just have to manually cast instances:
+Move to NET 6.0
+
+## Dependencies changed place
+
+* `EscapeFromTarkov_Data\Managed` -> `BepInEx\interop`
+* `BepInEx\plugins\spt` -> `BepInEx\plugins\sptushonka`
+
+## Dependencies changed name
+
+* `spt-reflection.dll` -> `SPTushonka.Reflection.dll`
+* `BepInEx.dll` -> `BepInEx.Core.dll`
+
+## New dependencies
+
+* `BepInEx.Unity.IL2CPP.dll`
+* `Il2Cppmscorlib.dll`
+* `Il2CppInterop.Runtime.dll`
+
+## Almost all private became public
+
+* Patches that access private fields via three underscores will crash, replace with direct access from __instance
+* Reflection used to access private fields will crash too, replace with direct access
+
+## Generic AssetBundle.LoadAsset doesnt exist
+
+Add this wrapper to your project
 
 ```cs
-public void BaseGameMethod(IContainer container) {}
-
-Slot slot = // got it from somewhere
-
-// in 4.1 Slot implements IContainer, casting is done implicitly
-BaseGameMethod(slot);
-
-// in 5.0 Slot inherits Il2CppObjectBase, but doesn't implement any interfaces,
-// so we have to do explicit casting via Il2CppObjectBase.TryCast method
-BaseGameMethod(slot.TryCast<IContainer>());
+public static class AssetBundleExtensions
+{
+  public static T LoadAsset<T>(this AssetBundle bundle, string path) where T : class
+  {
+    return bundle.LoadAsset(path, Il2CppInterop.Runtime.Il2CppType.Of<T>()).TryCast<T>();
+  }
+}
 ```
