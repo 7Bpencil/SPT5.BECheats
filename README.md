@@ -41,13 +41,25 @@ public static class AssetBundleExtensions
 
 ## Custom MonoBehaviour cannot have custom types in method parameters
 
-MyMono will fail to register because DoWork has parameter data of custom type MyClass:
+We have to register every custom MonoBehaviour in mod assembly otherwise it wont work:
 
 ```cs
-public class MyClass
+[BepInPlugin("guid", "name", "version")]
+public class Plugin : BasePlugin
 {
-  public int Id;
+  public override void Load()
+	{
+    ClassInjector.RegisterTypeInIl2Cpp<MyMono>();
+    // ...
+  }
 }
+
+```
+
+But some will fail to register, in this example MyMono fails because DoWork has parameter data of custom type MyClass:
+
+```cs
+public class MyClass { }
 
 public class MyMono : MonoBehaviour
 {
@@ -77,7 +89,7 @@ public class MyMono : MonoBehaviour
 And set it before calling method:
 
 ```cs
-public void MyMonoUser(MyMono instance)
+public void UseMyMono(MyMono instance)
 {
   // ...
   instance._DoWork_data = some_data;
