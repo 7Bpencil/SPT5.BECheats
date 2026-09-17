@@ -121,3 +121,47 @@ public void User()
   DoWork(DelegateSupport.ConvertDelegate<Il2CppSystem.Action<int>>(result => Logger.Log($"did the work: {result}")));
 }
 ```
+
+## Plugin is no longer MonoBehaviour
+
+Which means your `Update`, `LateUpdate`, `OnGUI`, etc wont be called, use separate runner MonoBehaviour:
+
+```cs
+public class Runner : MonoBehaviour
+{
+    public void OnGUI() => Plugin.Instance.OnGUI();
+    public void Update() => Plugin.Instance.Update();
+    public void LateUpdate() => Plugin.Instance.LateUpdate();
+}
+
+[BepInPlugin("guid", "name", "version")]
+public class Plugin : BasePlugin
+{
+    public static Plugin Instance;
+    public Runner Runner;
+
+    public override void Load()
+    {
+        Instance = this;
+        ClassInjector.RegisterTypeInIl2Cpp<Runner>();
+        Runner = AddComponent<Runner>();
+    }
+
+    public void OnGUI() { }
+    public void Update() { }
+    public void LateUpdate() { }
+}
+```
+
+Plugin not being MonoBehaviour means you cannot run coroutines on it, but you can run them on custom Runner:
+
+```cs
+[BepInPlugin("guid", "name", "version")]
+public class Plugin : BasePlugin
+{
+    public void StartCoroutine(IEnumerator routine)
+    {
+        BepInEx.Unity.IL2CPP.Utils.MonoBehaviourExtensions.StartCoroutine(Runner, routine);
+    }
+}
+```
