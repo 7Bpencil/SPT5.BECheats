@@ -97,3 +97,27 @@ public void UseMyMono(MyMono instance)
   // ...
 }
 ```
+
+## Converting delegates to Il2Cpp happy types
+
+In 4.1:
+
+```cs
+public void DoWork(Action<int> callback)
+
+public void User()
+{
+  DoWork(result => Logger.Log($"did the work: {result}"));
+}
+```
+
+In 5.0 convert via Il2CppInterop.Runtime.DelegateSupport.ConvertDelegate<T>
+
+```cs
+using Il2CppInterop.Runtime;
+
+public void User()
+{
+  DoWork(DelegateSupport.ConvertDelegate<Il2CppSystem.Action<int>>(result => Logger.Log($"did the work: {result}")));
+}
+```
