@@ -48,7 +48,7 @@ We have to register every custom MonoBehaviour in mod assembly otherwise it wont
 public class Plugin : BasePlugin
 {
   public override void Load()
-	{
+  {
     ClassInjector.RegisterTypeInIl2Cpp<MyMono>();
     // ...
   }
