@@ -159,6 +159,7 @@ Plugin not being MonoBehaviour means you cannot run coroutines on it, but you ca
 [BepInPlugin("guid", "name", "version")]
 public class Plugin : BasePlugin
 {
+    public Runner Runner;
     public void StartCoroutine(IEnumerator routine)
     {
         BepInEx.Unity.IL2CPP.Utils.MonoBehaviourExtensions.StartCoroutine(Runner, routine);
