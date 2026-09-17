@@ -38,3 +38,50 @@ public static class AssetBundleExtensions
   }
 }
 ```
+
+## Custom MonoBehaviour cannot have custom types in method parameters
+
+MyMono will fail to register because DoWork has parameter data of custom type MyClass:
+
+```cs
+public class MyClass
+{
+  public int Id;
+}
+
+public class MyMono : MonoBehaviour
+{
+  public void DoWork(MyClass data, Transform root, bool flag)
+  {
+    // ...
+  }
+}
+```
+
+Fix: move parameter to field
+
+```cs
+public class MyMono : MonoBehaviour
+{
+  public MyClass _DoWork_data;
+
+  public void DoWork(Transform root, bool flag)
+  {
+    var data = _DoWork_data;
+    _DoWork_data = null;
+    // ...
+  }
+}
+```
+
+And set it before calling method:
+
+```cs
+public void MyMonoUser(MyMono instance)
+{
+  // ...
+  instance._DoWork_data = some_data;
+  instance.DoWork(some_root, some_flag);
+  // ...
+}
+```
