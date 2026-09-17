@@ -32,10 +32,10 @@ Add this wrapper to your project
 ```cs
 public static class AssetBundleExtensions
 {
-  public static T LoadAsset<T>(this AssetBundle bundle, string path) where T : class
-  {
-    return bundle.LoadAsset(path, Il2CppInterop.Runtime.Il2CppType.Of<T>()).TryCast<T>();
-  }
+    public static T LoadAsset<T>(this AssetBundle bundle, string path) where T : class
+    {
+        return bundle.LoadAsset(path, Il2CppInterop.Runtime.Il2CppType.Of<T>()).TryCast<T>();
+    }
 }
 ```
 
@@ -47,11 +47,11 @@ We have to register every custom MonoBehaviour in mod assembly otherwise it wont
 [BepInPlugin("guid", "name", "version")]
 public class Plugin : BasePlugin
 {
-  public override void Load()
-  {
-    ClassInjector.RegisterTypeInIl2Cpp<MyMono>();
-    // ...
-  }
+    public override void Load()
+    {
+        ClassInjector.RegisterTypeInIl2Cpp<MyMono>();
+        // ...
+    }
 }
 
 ```
@@ -63,10 +63,10 @@ public class MyClass { }
 
 public class MyMono : MonoBehaviour
 {
-  public void DoWork(MyClass data, Transform root, bool flag)
-  {
-    // ...
-  }
+    public void DoWork(MyClass data, Transform root, bool flag)
+    {
+        // ...
+    }
 }
 ```
 
@@ -75,14 +75,14 @@ Fix: move parameter to field
 ```cs
 public class MyMono : MonoBehaviour
 {
-  public MyClass _DoWork_data;
+    public MyClass _DoWork_data;
 
-  public void DoWork(Transform root, bool flag)
-  {
-    var data = _DoWork_data;
-    _DoWork_data = null;
-    // ...
-  }
+    public void DoWork(Transform root, bool flag)
+    {
+        var data = _DoWork_data;
+        _DoWork_data = null;
+        // ...
+    }
 }
 ```
 
@@ -91,10 +91,10 @@ And set it before calling method:
 ```cs
 public void UseMyMono(MyMono instance)
 {
-  // ...
-  instance._DoWork_data = some_data;
-  instance.DoWork(some_root, some_flag);
-  // ...
+    // ...
+    instance._DoWork_data = some_data;
+    instance.DoWork(some_root, some_flag);
+    // ...
 }
 ```
 
@@ -107,7 +107,7 @@ public void DoWork(Action<int> callback)
 
 public void User()
 {
-  DoWork(result => Logger.Log($"did the work: {result}"));
+    DoWork(result => Logger.Log($"did the work: {result}"));
 }
 ```
 
@@ -118,7 +118,7 @@ using Il2CppInterop.Runtime;
 
 public void User()
 {
-  DoWork(DelegateSupport.ConvertDelegate<Il2CppSystem.Action<int>>(result => Logger.Log($"did the work: {result}")));
+    DoWork(DelegateSupport.ConvertDelegate<Il2CppSystem.Action<int>>(result => Logger.Log($"did the work: {result}")));
 }
 ```
 
