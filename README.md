@@ -98,7 +98,7 @@ public void UseMyMono(MyMono instance)
 }
 ```
 
-## Converting delegates to Il2Cpp happy types
+## Converting delegates to IL2CPP happy types
 
 In 4.1:
 
@@ -153,7 +153,7 @@ public class Plugin : BasePlugin
 }
 ```
 
-Plugin not being MonoBehaviour means you cannot run coroutines on it, but you can run them on custom Runner:
+Plugin not being MonoBehaviour means you cannot run coroutines on it, but you can run them on custom Runner, add this wrapper to your plugin class:
 
 ```cs
 [BepInPlugin("guid", "name", "version")]
