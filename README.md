@@ -20,7 +20,7 @@ Move to NET 6.0
 * `Il2Cppmscorlib.dll`
 * `Il2CppInterop.Runtime.dll`
 
-## Almost all private became public
+## Almost everything private became public
 
 * Patches that access private fields via three underscores will crash, replace with direct access from __instance
 * Reflection used to access private fields will crash too, replace with direct access
