@@ -2,7 +2,7 @@
 
 ## Target framework changed
 
-Move to NET 6.0
+Move to NET 10.0
 
 ## Dependencies changed place
 
@@ -127,6 +127,9 @@ public void User()
 Which means your `Update`, `LateUpdate`, `OnGUI`, etc wont be called, use separate runner MonoBehaviour:
 
 ```cs
+using BepInEx.Unity.IL2CPP;
+using Il2CppInterop.Runtime.Injection;
+
 public class Runner : MonoBehaviour
 {
     public void OnGUI() => Plugin.Instance.OnGUI();
