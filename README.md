@@ -169,3 +169,10 @@ public class Plugin : BasePlugin
     }
 }
 ```
+
+## Switch from Newtonsoft.Json to System.Text.Json
+
+IL2CPP version of JsonConvert.SerializeObject is not generic and only accepts Il2CppSystem.Object, just switch to standard NET.10 JSON serializer
+
+* JsonConvert.SerializeObject() -> JsonSerializer.Serialize()
+* JsonConvert.DeserializeObject<>() -> JsonSerializer.Deserialize<>()
