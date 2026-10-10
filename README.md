@@ -131,3 +131,7 @@ T value = ...
 var json = JsonSerializer.Serialize(value, serializerOptions);
 var valueNew = JsonSerializer.Deserialize<T>(json, serializerOptions);
 ```
+
+## Where is KeyboardShortcut?
+
+It's inside `BepInEx/plugins/sptushonka/ConfigurationManager/BepInEx.KeyboardShortcut.dll`
