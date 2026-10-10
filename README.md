@@ -39,65 +39,6 @@ public static class AssetBundleExtensions
 }
 ```
 
-## Custom MonoBehaviour cannot have custom types in method parameters
-
-We have to register every custom MonoBehaviour in mod assembly otherwise it wont work:
-
-```cs
-[BepInPlugin("guid", "name", "version")]
-public class Plugin : BasePlugin
-{
-    public override void Load()
-    {
-        ClassInjector.RegisterTypeInIl2Cpp<MyMono>();
-        // ...
-    }
-}
-
-```
-
-But some will fail to register, in this example MyMono fails because DoWork has parameter data of custom type MyClass:
-
-```cs
-public class MyClass { }
-
-public class MyMono : MonoBehaviour
-{
-    public void DoWork(MyClass data, Transform root, bool flag)
-    {
-        // ...
-    }
-}
-```
-
-Fix: move parameter to field
-
-```cs
-public class MyMono : MonoBehaviour
-{
-    public MyClass _DoWork_data;
-
-    public void DoWork(Transform root, bool flag)
-    {
-        var data = _DoWork_data;
-        _DoWork_data = null;
-        // ...
-    }
-}
-```
-
-And set it before calling method:
-
-```cs
-public void UseMyMono(MyMono instance)
-{
-    // ...
-    instance._DoWork_data = some_data;
-    instance.DoWork(some_root, some_flag);
-    // ...
-}
-```
-
 ## Converting delegates to IL2CPP happy types
 
 In 4.1:
@@ -176,3 +117,17 @@ IL2CPP version of JsonConvert.SerializeObject is not generic and only accepts Il
 
 * JsonConvert.SerializeObject() -> JsonSerializer.Serialize()
 * JsonConvert.DeserializeObject<>() -> JsonSerializer.Deserialize<>()
+
+I recommend at least these serializer options, otherwise some Unity types will fail spectacularly (for example Vector3 will hit recursion limit on .normalized property)
+
+```cs
+var serializerOptions = new JsonSerializerOptions()
+{
+    IncludeFields = true,
+    IgnoreReadOnlyProperties = true,
+};
+
+T value = ...
+var json = JsonSerializer.Serialize(value, serializerOptions);
+var valueNew = JsonSerializer.Deserialize<T>(json, serializerOptions);
+```
