@@ -125,6 +125,10 @@ var serializerOptions = new JsonSerializerOptions()
 {
     IncludeFields = true,
     IgnoreReadOnlyProperties = true,
+    Converters =
+    {
+        new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)
+    }
 };
 
 T value = ...
